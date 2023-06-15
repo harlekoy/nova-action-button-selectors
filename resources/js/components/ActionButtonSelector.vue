@@ -2,20 +2,20 @@
   <div v-if="hasDropdownItems" class="flex">
 
     <div
-        v-if="actions.length > 0"
-        :dusk="`${resource.id.value}-inline-actions`"
-        class="flex gap-4 py-0"
-        :class="{'mr-4': shouldShowDropdown}"
+      v-if="actions.length > 0"
+      :dusk="`${resource.id.value}-inline-actions`"
+      class="flex gap-4 py-0"
+      :class="{'mr-4': shouldShowDropdown}"
     >
       <template v-for="action in actions">
         <button
-            v-if="action.showAsButton"
-            :key="action.uriKey"
-            :dusk="`${resource.id.value}-inline-action-${action.uriKey}`"
-            @click="() => handleActionClick(action.uriKey)"
-            :title="action.name"
-            :destructive="action.destructive"
-            class="relative inline-flex items-center justify-center px-3 text-sm font-bold text-white rounded shadow cursor-pointer bg-primary-500 hover:bg-primary-400 dark:text-gray-900 focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 h-9">
+          v-if="action.showAsButton"
+          :key="action.uriKey"
+          :dusk="`${resource.id.value}-inline-action-${action.uriKey}`"
+          @click="() => handleActionClick(action.uriKey)"
+          :title="action.name"
+          :destructive="action.destructive"
+          class="relative inline-flex items-center justify-center px-3 text-sm font-bold text-white rounded shadow cursor-pointer bg-primary-500 hover:bg-primary-400 dark:text-gray-900 focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 h-9">
           {{ action.name }}
         </button>
       </template>
@@ -24,9 +24,9 @@
     <Dropdown v-if="shouldShowDropdown">
       <span class="sr-only">{{ __('Resource Row Dropdown') }}</span>
       <DropdownTrigger
-          :dusk="`${resource.id.value}-control-selector`"
-          :show-arrow="false"
-          class="rounded hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring"
+        :dusk="`${resource.id.value}-control-selector`"
+        :show-arrow="false"
+        class="rounded hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring"
       >
         <BasicButton component="span">
           <Icon :solid="true" type="dots-horizontal"/>
@@ -36,90 +36,90 @@
       <template #menu>
         <DropdownMenu width="auto" class="px-1">
           <ScrollWrap
-              :height="250"
-              class="divide-y divide-gray-100 dark:divide-gray-800 divide-solid"
+            :height="250"
+            class="divide-y divide-gray-100 dark:divide-gray-800 divide-solid"
           >
             <div class="py-1" v-if="canModifyResource">
               <!-- Replicate Resource Link -->
               <DropdownMenuItem
-                  v-if="resource.authorizedToReplicate"
-                  :dusk="`${resource.id.value}-replicate-button`"
-                  :href="
+                v-if="resource.authorizedToReplicate"
+                :dusk="`${resource.id.value}-replicate-button`"
+                :href="
                   $url(
                     `/resources/${resourceName}/${resource.id.value}/replicate`,
                     { viaResource, viaResourceId, viaRelationship }
                   )
                 "
-                  :title="__('Replicate')"
+                :title="__('Replicate')"
               >
                 {{ __('Replicate') }}
               </DropdownMenuItem>
 
               <!-- Impersonate Resource Button -->
               <DropdownMenuItem
-                  as="button"
-                  v-if="canBeImpersonated"
-                  :dusk="`${resource.id.value}-impersonate-button`"
-                  @click.prevent="
+                as="button"
+                v-if="canBeImpersonated"
+                :dusk="`${resource.id.value}-impersonate-button`"
+                @click.prevent="
                   startImpersonating({
                     resource: resourceName,
                     resourceId: resource.id.value,
                   })
                 "
-                  :title="__('Impersonate')"
+                :title="__('Impersonate')"
               >
                 {{ __('Impersonate') }}
               </DropdownMenuItem>
 
               <DropdownMenuItem
-                  v-if="resource.authorizedToDelete && !resource.softDeleted"
-                  data-testid="open-delete-modal"
-                  dusk="open-delete-modal-button"
-                  @click.prevent="openDeleteModal"
-                  :destructive="true"
+                v-if="resource.authorizedToDelete && !resource.softDeleted"
+                data-testid="open-delete-modal"
+                dusk="open-delete-modal-button"
+                @click.prevent="openDeleteModal"
+                :destructive="true"
               >
                 {{ __('Delete Resource') }}
               </DropdownMenuItem>
 
               <DropdownMenuItem
-                  as="button"
-                  v-if="resource.authorizedToRestore && resource.softDeleted"
-                  class="block w-full px-3 py-1 text-sm font-semibold text-left text-red-400 hover:text-red-300 focus:text-red-600 focus:outline-none focus:ring ring-inset"
-                  data-testid="open-restore-modal"
-                  dusk="open-restore-modal-button"
-                  @click.prevent="openRestoreModal"
+                as="button"
+                v-if="resource.authorizedToRestore && resource.softDeleted"
+                class="block w-full px-3 py-1 text-sm font-semibold text-left text-red-400 hover:text-red-300 focus:text-red-600 focus:outline-none focus:ring ring-inset"
+                data-testid="open-restore-modal"
+                dusk="open-restore-modal-button"
+                @click.prevent="openRestoreModal"
               >
                 {{ __('Restore Resource') }}
               </DropdownMenuItem>
 
               <DropdownMenuItem
-                  as="button"
-                  v-if="resource.authorizedToForceDelete"
-                  class="block w-full px-3 py-1 text-sm font-semibold text-left text-red-400 hover:text-red-300 focus:text-red-600 focus:outline-none focus:ring ring-inset"
-                  data-testid="open-force-delete-modal"
-                  dusk="open-force-delete-modal-button"
-                  @click.prevent="openForceDeleteModal"
-                  :destructive="true"
+                as="button"
+                v-if="resource.authorizedToForceDelete"
+                class="block w-full px-3 py-1 text-sm font-semibold text-left text-red-400 hover:text-red-300 focus:text-red-600 focus:outline-none focus:ring ring-inset"
+                data-testid="open-force-delete-modal"
+                dusk="open-force-delete-modal-button"
+                @click.prevent="openForceDeleteModal"
+                :destructive="true"
               >
                 {{ __('Force Delete Resource') }}
               </DropdownMenuItem>
             </div>
 
             <div
-                v-if="actions.filter(action => action.showAsButton !== true).length > 0"
-                :dusk="`${resource.id.value}-inline-actions`"
-                class="py-1"
+              v-if="actions.filter(action => action.showAsButton !== true).length > 0"
+              :dusk="`${resource.id.value}-inline-actions`"
+              class="py-1"
             >
               <template v-for="action in actions">
                 <!-- User Actions -->
                 <DropdownMenuItem
-                    as="button"
-                    v-if="!action.showAsButton"
-                    :key="action.uriKey"
-                    :dusk="`${resource.id.value}-inline-action-${action.uriKey}`"
-                    @click="() => handleActionClick(action.uriKey)"
-                    :title="action.name"
-                    :destructive="action.destructive"
+                  v-if="!action.showAsButton"
+                  as="button"
+                  :key="action.uriKey"
+                  :dusk="`${resource.id.value}-inline-action-${action.uriKey}`"
+                  @click="() => handleActionClick(action.uriKey)"
+                  :title="action.name"
+                  :destructive="action.destructive"
                 >
                   {{ action.name }}
                 </DropdownMenuItem>
@@ -133,46 +133,46 @@
 
     <!-- Action Confirmation Modal -->
     <component
-        v-if="confirmActionModalOpened"
-        :show="confirmActionModalOpened"
-        :is="selectedAction.component"
-        :working="working"
-        :selected-resources="selectedResources"
-        :resource-name="resourceName"
-        :action="selectedAction"
-        :endpoint="endpoint"
-        :errors="errors"
-        @confirm="executeAction"
-        @close="closeConfirmationModal"
+      v-if="confirmActionModalOpened"
+      :show="confirmActionModalOpened"
+      :is="selectedAction.component"
+      :working="working"
+      :selected-resources="selectedResources"
+      :resource-name="resourceName"
+      :action="selectedAction"
+      :endpoint="endpoint"
+      :errors="errors"
+      @confirm="executeAction"
+      @close="closeConfirmationModal"
     />
 
     <!-- Action Response Modal -->
     <component
-        v-if="selectedAction"
-        :is="actionResponseData.modal"
-        @close="closeActionResponseModal"
-        :show="showActionResponseModal"
-        :data="actionResponseData"
+      v-if="selectedAction"
+      :is="actionResponseData.modal"
+      @close="closeActionResponseModal"
+      :show="showActionResponseModal"
+      :data="actionResponseData"
     />
 
     <DeleteResourceModal
-        :show="deleteModalOpen"
-        mode="delete"
-        @close="closeDeleteModal"
-        @confirm="confirmDelete"
+      :show="deleteModalOpen"
+      mode="delete"
+      @close="closeDeleteModal"
+      @confirm="confirmDelete"
     />
 
     <RestoreResourceModal
-        :show="restoreModalOpen"
-        @close="closeRestoreModal"
-        @confirm="confirmRestore"
+      :show="restoreModalOpen"
+      @close="closeRestoreModal"
+      @confirm="confirmRestore"
     />
 
     <DeleteResourceModal
-        :show="forceDeleteModalOpen"
-        mode="force delete"
-        @close="closeForceDeleteModal"
-        @confirm="confirmForceDelete"
+      :show="forceDeleteModalOpen"
+      mode="force delete"
+      @close="closeForceDeleteModal"
+      @confirm="confirmForceDelete"
     />
   </div>
 </template>
@@ -229,9 +229,9 @@ export default {
     async confirmDelete() {
       this.deleteResources([this.resource], response => {
         Nova.success(
-            this.__('The :resource was deleted!', {
-              resource: this.resourceInformation.singularLabel.toLowerCase(),
-            })
+          this.__('The :resource was deleted!', {
+            resource: this.resourceInformation.singularLabel.toLowerCase(),
+          })
         )
 
         if (response && response.data && response.data.redirect) {
@@ -269,9 +269,9 @@ export default {
     async confirmRestore() {
       this.restoreResources([this.resource], () => {
         Nova.success(
-            this.__('The :resource was restored!', {
-              resource: this.resourceInformation.singularLabel.toLowerCase(),
-            })
+          this.__('The :resource was restored!', {
+            resource: this.resourceInformation.singularLabel.toLowerCase(),
+          })
         )
 
         this.closeRestoreModal()
@@ -299,9 +299,9 @@ export default {
     async confirmForceDelete() {
       this.forceDeleteResources([this.resource], response => {
         Nova.success(
-            this.__('The :resource was deleted!', {
-              resource: this.resourceInformation.singularLabel.toLowerCase(),
-            })
+          this.__('The :resource was deleted!', {
+            resource: this.resourceInformation.singularLabel.toLowerCase(),
+          })
         )
 
         if (response && response.data && response.data.redirect) {
@@ -349,17 +349,17 @@ export default {
 
     canModifyResource() {
       return (
-          this.resource.authorizedToReplicate ||
-          this.canBeImpersonated ||
-          (this.resource.authorizedToDelete && !this.resource.softDeleted) ||
-          (this.resource.authorizedToRestore && this.resource.softDeleted) ||
-          this.resource.authorizedToForceDelete
+        this.resource.authorizedToReplicate ||
+        this.canBeImpersonated ||
+        (this.resource.authorizedToDelete && !this.resource.softDeleted) ||
+        (this.resource.authorizedToRestore && this.resource.softDeleted) ||
+        this.resource.authorizedToForceDelete
       )
     },
 
     canBeImpersonated() {
       return (
-          this.currentUser.canImpersonate && this.resource.authorizedToImpersonate
+        this.currentUser.canImpersonate && this.resource.authorizedToImpersonate
       )
     },
 
