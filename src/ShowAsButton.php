@@ -7,10 +7,10 @@ trait ShowAsButton
     /**
      * ShowAsButton constructor.
      */
-    public function __construct()
+    public function __construct(...$parameters)
     {
         if (method_exists(parent::class, '__construct')) {
-            parent::__construct();
+            parent::__construct(...$parameters);
         }
 
         return $this->showAsButton();
