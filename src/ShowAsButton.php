@@ -4,9 +4,15 @@ namespace Lednerb\ActionButtonSelector;
 
 trait ShowAsButton
 {
-
-    public function __construct()
+    /**
+     * ShowAsButton constructor.
+     */
+    public function __construct(...$parameters)
     {
+        if (method_exists(parent::class, '__construct')) {
+            parent::__construct(...$parameters);
+        }
+
         return $this->showAsButton();
     }
 

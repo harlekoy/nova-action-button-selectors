@@ -1,26 +1,27 @@
 <template>
   <div v-if="hasDropdownItems" class="flex">
-    
-      <div
-        v-if="actions.length > 0"
-        :dusk="`${resource.id.value}-inline-actions`"
-        class="flex gap-4 py-0 mr-4"
-        >
-        <template v-for="action in actions">
-          <button
-              v-if="action.showAsButton"
-              :key="action.uriKey"
-              :dusk="`${resource.id.value}-inline-action-${action.uriKey}`"
-              @click="() => handleActionClick(action.uriKey)"
-              :title="action.name"
-              :destructive="action.destructive"
-              class="relative inline-flex items-center justify-center px-3 text-sm font-bold text-white rounded shadow cursor-pointer bg-primary-500 hover:bg-primary-400 dark:text-gray-900 focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 h-9" >
-              {{ action.name }}
-          </button>
-        </template>
-      </div>
 
-    <Dropdown>
+    <div
+      v-if="actions.length > 0"
+      :dusk="`${resource.id.value}-inline-actions`"
+      class="flex gap-4 py-0"
+      :class="{'mr-4': shouldShowDropdown}"
+    >
+      <template v-for="action in actions">
+        <button
+          v-if="action.showAsButton"
+          :key="action.uriKey"
+          :dusk="`${resource.id.value}-inline-action-${action.uriKey}`"
+          @click="() => handleActionClick(action.uriKey)"
+          :title="action.name"
+          :destructive="action.destructive"
+          class="relative inline-flex items-center justify-center px-3 text-sm font-bold text-white rounded shadow cursor-pointer bg-primary-500 hover:bg-primary-400 dark:text-gray-900 focus:outline-none focus:ring ring-primary-200 dark:ring-gray-600 h-9">
+          {{ action.name }}
+        </button>
+      </template>
+    </div>
+
+    <Dropdown v-if="shouldShowDropdown">
       <span class="sr-only">{{ __('Resource Row Dropdown') }}</span>
       <DropdownTrigger
         :dusk="`${resource.id.value}-control-selector`"
@@ -28,7 +29,7 @@
         class="rounded hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring"
       >
         <BasicButton component="span">
-          <Icon :solid="true" type="dots-horizontal" />
+          <Icon :solid="true" type="dots-horizontal"/>
         </BasicButton>
       </DropdownTrigger>
 
@@ -112,8 +113,8 @@
               <template v-for="action in actions">
                 <!-- User Actions -->
                 <DropdownMenuItem
-                  as="button"
                   v-if="!action.showAsButton"
+                  as="button"
                   :key="action.uriKey"
                   :dusk="`${resource.id.value}-inline-action-${action.uriKey}`"
                   @click="() => handleActionClick(action.uriKey)"
@@ -124,7 +125,7 @@
                 </DropdownMenuItem>
               </template>
             </div>
-            
+
           </ScrollWrap>
         </DropdownMenu>
       </template>
@@ -178,7 +179,7 @@
 
 <script>
 
-import { mapGetters, mapActions } from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 import {
   Deletable,
@@ -194,13 +195,13 @@ export default {
   mixins: [Deletable, HandlesActions, InteractsWithResourceInformation],
 
   props: {
-    resource: { type: Object },
+    resource: {type: Object},
     resourceName: String,
-    actions: { type: Array },
-    viaManyToMany: { type: Boolean },
-    viaResource: { type: String, default: '' },
-    viaResourceId: { type: String, default: '' },
-    viaRelationship: { type: String, default: '' },
+    actions: {type: Array},
+    viaManyToMany: {type: Boolean},
+    viaResource: {type: String, default: ''},
+    viaResourceId: {type: String, default: ''},
+    viaRelationship: {type: String, default: ''},
   },
 
   data: () => ({
@@ -364,6 +365,12 @@ export default {
 
     selectedResources() {
       return [this.resource.id.value]
+    },
+
+    shouldShowDropdown() {
+      const showInDropdownList = this.actions.filter(action => action.showAsButton === false);
+
+      return !!(showInDropdownList.length > 0 || this.userHasAnyOptions);
     },
   },
 }
