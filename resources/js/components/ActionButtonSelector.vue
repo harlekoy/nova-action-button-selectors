@@ -2,7 +2,6 @@
   <div v-if="hasDropdownItems" class="flex">
 
     <div
-      v-if="actions.length > 0"
       :dusk="`${resource.id.value}-inline-actions`"
       class="flex gap-4 py-0"
       :class="{'mr-4': shouldShowDropdown}"
