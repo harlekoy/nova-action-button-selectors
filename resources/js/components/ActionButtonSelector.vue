@@ -369,7 +369,7 @@ export default {
     shouldShowDropdown() {
       const showInDropdownList = this.actions.filter(action => action.showAsButton === false);
 
-      return !!(showInDropdownList.length > 0 || this.userHasAnyOptions);
+      return !(showInDropdownList.length > 0 || this.userHasAnyOptions);
     },
   },
 }
