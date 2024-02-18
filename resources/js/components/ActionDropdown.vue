@@ -142,7 +142,8 @@ const shouldShowButtons = computed(() => {
 });
 
 const shouldShowDropdown = computed(() => {
-    const showInDropdownList = props.actions.filter((action) => action.showAsButton === false);
+
+    const showInDropdownList = props.actions.filter((action) => !(action.showAsButton === true));
 
     return showInDropdownList.length > 0;
 });
