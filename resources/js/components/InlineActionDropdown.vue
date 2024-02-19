@@ -166,11 +166,6 @@ export default {
         },
 
         shouldShowDropdown() {
-            console.log(`Gesamt: ${this.actions.length}`);
-            console.log(`ShowAsButton: ${this.actions.filter((action) => action.showAsButton == true).length}`);
-
-            console.log(`UserOptions: ${this.userHasAnyOptions}`);
-
             return this.amountDropdownActions > 0 || this.userHasAnyOptions;
         },
 
@@ -179,7 +174,7 @@ export default {
         },
 
         amountDropdownActions() {
-            return this.actions.filter((action) => action.showAsButton != true).length;
+            return this.actions.filter((action) => !(action.showAsButton == true)).length;
         },
 
         shouldShowPreviewLink() {
