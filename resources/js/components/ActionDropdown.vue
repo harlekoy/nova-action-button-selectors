@@ -49,12 +49,15 @@
 
                 <Dropdown v-if="shouldShowDropdown">
                     <template #default>
-                        <div>
-                            <slot name="sr-only">
-                                <span class="sr-only">{{ __('Standalone Actions') }}</span>
-                            </slot>
-                            <Button variant="action" icon="ellipsis-horizontal" :dusk="`${resource.id.value}-control-selector`" />
-                        </div>
+                        <slot name="trigger">
+                            <Button
+                                @click.stop
+                                :dusk="triggerDuskAttribute"
+                                variant="ghost"
+                                icon="ellipsis-horizontal"
+                                v-tooltip="__('Actions')"
+                            />
+                        </slot>
                     </template>
 
                     <template #menu>
